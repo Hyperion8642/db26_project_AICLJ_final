@@ -1,0 +1,965 @@
+{
+  "datasets": [
+    {
+      "name": "project_metrics",
+      "displayName": "Project Metrics",
+      "config": {
+        "version": "1.1",
+        "source": "workspace.default.cbpf_efficiency_final",
+        "dimensions": [
+          {
+            "name": "Project Code",
+            "expr": "project_code"
+          },
+          {
+            "name": "Allocation Year",
+            "expr": "allocation_year"
+          },
+          {
+            "name": "Allocation Type",
+            "expr": "allocation_source"
+          },
+          {
+            "name": "Country",
+            "expr": "country"
+          },
+          {
+            "name": "Sector",
+            "expr": "sector_tag"
+          },
+          {
+            "name": "Efficiency Flag",
+            "expr": "eff_flag"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Project Count",
+            "expr": "COUNT(project_code)"
+          },
+          {
+            "name": "Total Budget",
+            "expr": "SUM(budget)",
+            "format": {
+              "type": "currency",
+              "currencyCode": "USD",
+              "decimalPlaces": {
+                "type": "exact",
+                "places": 0.0
+              }
+            }
+          },
+          {
+            "name": "People Targeted",
+            "expr": "SUM(people_targeted)"
+          },
+          {
+            "name": "Avg Budget per Person",
+            "expr": "AVG(budget_per_person)"
+          },
+          {
+            "name": "Flagged Projects",
+            "expr": "SUM(CASE WHEN eff_flag IS NOT NULL THEN 1 ELSE 0 END)"
+          },
+          {
+            "name": "Avg Efficiency Score",
+            "expr": "AVG(eff_score)"
+          },
+          {
+            "name": "Avg Severity",
+            "expr": "AVG(severity)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "flagged_projects",
+      "displayName": "Flagged Projects",
+      "queryLines": [
+        "SELECT p.`project_code`, p.`project_title`, p.`country`, p.`allocation_year`, p.`allocation_source`, p.`sector_tag`, p.`budget`,\n",
+        "p.`budget_per_person`, p.`sector_mean`, ROUND(p.`eff_score`, 2) AS `eff_score`, p.`eff_flag`,\n",
+        "p.`sector_p10`, p.`sector_p90`, p.`people_targeted`, p.`severity`,\n",
+        "u.`project_url`, u.`project_url_type`, c.`closest_1`, c.`closest_2`\n",
+        "FROM workspace.default.cbpf_efficiency_final AS p\n",
+        "LEFT JOIN read_files(\n",
+        "  '/Workspace/Users/jcao2653@uw.edu/DATABRICKS_PROJECT/score_url.csv',\n",
+        "  format => 'csv',\n",
+        "  header => true\n",
+        ") AS u\n",
+        "ON p.`project_code` = u.`ChfProjectCode`\n",
+        "LEFT JOIN workspace.default.cbpf_closest_projects AS c\n",
+        "ON p.`project_code` = c.`project_code`\n",
+        "WHERE p.`eff_flag` IS NOT NULL\n",
+        "ORDER BY p.`allocation_year` DESC, p.`eff_score`"
+      ]
+    },
+    {
+      "name": "project_points",
+      "displayName": "Project Points",
+      "queryLines": [
+        "SELECT `project_code`, `country`, `allocation_year`, `allocation_source`, `sector_tag`,\n",
+        "`eff_flag`, `people_targeted`, `eff_score`\n",
+        "FROM workspace.default.cbpf_efficiency_final"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "overview",
+      "displayName": "Projects Overview",
+      "layout": [
+        {
+          "widget": {
+            "name": "c_projects",
+            "queries": [
+              {
+                "name": "main",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "project_count",
+                      "expression": "MEASURE(`Project Count`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "frame": {
+                "title": "Projects",
+                "showTitle": true
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "project_count",
+                  "displayName": "Projects",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_budget",
+            "queries": [
+              {
+                "name": "main",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "total_budget",
+                      "expression": "MEASURE(`Total Budget`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "frame": {
+                "title": "Total budget (USD)",
+                "showTitle": true
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "total_budget",
+                  "displayName": "Total budget",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 12,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_targeted",
+            "queries": [
+              {
+                "name": "main",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "people_targeted",
+                      "expression": "MEASURE(`People Targeted`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "frame": {
+                "title": "People targeted",
+                "showTitle": true
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "people_targeted",
+                  "displayName": "People targeted",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 12,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "c_flagged",
+            "queries": [
+              {
+                "name": "main",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "flagged",
+                      "expression": "MEASURE(`Flagged Projects`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "frame": {
+                "title": "Flagged for review",
+                "showTitle": true
+              },
+              "encodings": {
+                "value": {
+                  "fieldName": "flagged",
+                  "displayName": "Flagged projects",
+                  "format": {
+                    "type": "number-plain",
+                    "abbreviation": "none",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 0
+                    }
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main"
+              }
+            }
+          },
+          "position": {
+            "x": 9,
+            "y": 12,
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "widget": {
+            "name": "eff_scatter",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "project_points",
+                  "fields": [
+                    {
+                      "name": "eff_flag",
+                      "expression": "`eff_flag`"
+                    },
+                    {
+                      "name": "people_targeted",
+                      "expression": "`people_targeted`"
+                    },
+                    {
+                      "name": "eff_score",
+                      "expression": "`eff_score`"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Efficiency score vs people targeted, per project",
+                  "fields": []
+                }
+              },
+              "version": 3,
+              "annotations": [
+                {
+                  "type": "horizontal-line",
+                  "encodings": {
+                    "y": {
+                      "dataValue": "1",
+                      "dataType": "DOUBLE"
+                    },
+                    "label": {
+                      "value": "Cost per person = sector benchmark"
+                    }
+                  }
+                }
+              ],
+              "widgetType": "scatter",
+              "encodings": {
+                "x": {
+                  "fieldName": "people_targeted",
+                  "displayName": "People targeted",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "eff_score",
+                  "displayName": "Efficiency score (sector benchmark / actual cost per person)",
+                  "scale": {
+                    "type": "quantitative",
+                    "fn": {
+                      "type": "symlog"
+                    }
+                  }
+                },
+                "color": {
+                  "fieldName": "eff_flag",
+                  "displayName": "Flag",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "t_underfunded_list",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "project_title",
+                      "expression": "`project_title`"
+                    },
+                    {
+                      "name": "allocation_year",
+                      "expression": "`allocation_year`"
+                    },
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "sector_tag",
+                      "expression": "`sector_tag`"
+                    },
+                    {
+                      "name": "eff_score",
+                      "expression": "`eff_score`"
+                    },
+                    {
+                      "name": "closest_1",
+                      "expression": "`closest_1`"
+                    },
+                    {
+                      "name": "closest_2",
+                      "expression": "`closest_2`"
+                    },
+                    {
+                      "name": "project_url",
+                      "expression": "`project_url`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`eff_flag` IN ('Potentially underfunded')"
+                    }
+                  ],
+                  "disaggregated": true,
+                  "orders": [
+                    {
+                      "direction": "DESC",
+                      "expression": "`eff_score`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Potentially underfunded projects",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "project_title",
+                    "displayName": "Project",
+                    "actions": {
+                      "click": {
+                        "openInNewTab": true,
+                        "type": "link",
+                        "urlTemplate": "{{ project_url }}"
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "allocation_year",
+                    "displayName": "Year"
+                  },
+                  {
+                    "fieldName": "country",
+                    "displayName": "Country"
+                  },
+                  {
+                    "fieldName": "sector_tag",
+                    "displayName": "Sector"
+                  },
+                  {
+                    "fieldName": "eff_score",
+                    "displayName": "Efficiency score"
+                  },
+                  {
+                    "fieldName": "closest_1",
+                    "displayName": "Closest project 1"
+                  },
+                  {
+                    "fieldName": "closest_2",
+                    "displayName": "Closest project 2"
+                  }
+                ],
+                "rowOrder": [
+                  {
+                    "by": "column-reversed",
+                    "field": {
+                      "index": 4
+                    }
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "t_overfunded_list",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "project_title",
+                      "expression": "`project_title`"
+                    },
+                    {
+                      "name": "allocation_year",
+                      "expression": "`allocation_year`"
+                    },
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    },
+                    {
+                      "name": "sector_tag",
+                      "expression": "`sector_tag`"
+                    },
+                    {
+                      "name": "eff_score",
+                      "expression": "`eff_score`"
+                    },
+                    {
+                      "name": "project_url",
+                      "expression": "`project_url`"
+                    },
+                    {
+                      "name": "closest_1",
+                      "expression": "`closest_1`"
+                    },
+                    {
+                      "name": "closest_2",
+                      "expression": "`closest_2`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`eff_flag` IN ('Potentially overfunded')"
+                    }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "frame": {
+                "showTitle": true,
+                "title": {
+                  "value": "Potentially overfunded projects",
+                  "fields": []
+                }
+              },
+              "version": 2,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "project_title",
+                    "displayName": "Project",
+                    "actions": {
+                      "click": {
+                        "openInNewTab": true,
+                        "type": "link",
+                        "urlTemplate": "{{ project_url }}"
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "allocation_year",
+                    "displayName": "Year"
+                  },
+                  {
+                    "fieldName": "country",
+                    "displayName": "Country"
+                  },
+                  {
+                    "fieldName": "sector_tag",
+                    "displayName": "Sector"
+                  },
+                  {
+                    "fieldName": "eff_score",
+                    "displayName": "Efficiency score"
+                  },
+                  {
+                    "fieldName": "closest_1",
+                    "displayName": "Closest project 1"
+                  },
+                  {
+                    "fieldName": "closest_2",
+                    "displayName": "Closest project 2"
+                  }
+                ]
+              },
+              "data": {
+                "queryName": "main_query"
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "global_filters",
+      "displayName": "Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "year_filter",
+            "queries": [
+              {
+                "name": "year_domain_metrics",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "Allocation Year",
+                      "expression": "`Allocation Year`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "year_domain_sql",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "allocation_year",
+                      "expression": "`allocation_year`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "year_domain_points",
+                "query": {
+                  "datasetName": "project_points",
+                  "fields": [
+                    {
+                      "name": "allocation_year",
+                      "expression": "`allocation_year`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "frame": {
+                "title": "Allocation Year",
+                "showTitle": true
+              },
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "Allocation Year",
+                    "queryName": "year_domain_metrics"
+                  },
+                  {
+                    "fieldName": "allocation_year",
+                    "queryName": "year_domain_sql"
+                  },
+                  {
+                    "fieldName": "allocation_year",
+                    "queryName": "year_domain_points"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "type_filter",
+            "queries": [
+              {
+                "name": "type_domain_metrics",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "Allocation Type",
+                      "expression": "`Allocation Type`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "type_domain_sql",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "allocation_source",
+                      "expression": "`allocation_source`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "type_domain_points",
+                "query": {
+                  "datasetName": "project_points",
+                  "fields": [
+                    {
+                      "name": "allocation_source",
+                      "expression": "`allocation_source`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-multi-select",
+              "frame": {
+                "title": "Allocation Type",
+                "showTitle": true
+              },
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "Allocation Type",
+                    "queryName": "type_domain_metrics"
+                  },
+                  {
+                    "fieldName": "allocation_source",
+                    "queryName": "type_domain_sql"
+                  },
+                  {
+                    "fieldName": "allocation_source",
+                    "queryName": "type_domain_points"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "country_filter",
+            "queries": [
+              {
+                "name": "country_domain_metrics",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "Country",
+                      "expression": "`Country`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "country_domain_sql",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "country_domain_points",
+                "query": {
+                  "datasetName": "project_points",
+                  "fields": [
+                    {
+                      "name": "country",
+                      "expression": "`country`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-multi-select",
+              "frame": {
+                "title": "Country",
+                "showTitle": true
+              },
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "Country",
+                    "queryName": "country_domain_metrics"
+                  },
+                  {
+                    "fieldName": "country",
+                    "queryName": "country_domain_sql"
+                  },
+                  {
+                    "fieldName": "country",
+                    "queryName": "country_domain_points"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 4,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "sector_filter",
+            "queries": [
+              {
+                "name": "sector_domain_metrics",
+                "query": {
+                  "datasetName": "project_metrics",
+                  "fields": [
+                    {
+                      "name": "Sector",
+                      "expression": "`Sector`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "sector_domain_sql",
+                "query": {
+                  "datasetName": "flagged_projects",
+                  "fields": [
+                    {
+                      "name": "sector_tag",
+                      "expression": "`sector_tag`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              },
+              {
+                "name": "sector_domain_points",
+                "query": {
+                  "datasetName": "project_points",
+                  "fields": [
+                    {
+                      "name": "sector_tag",
+                      "expression": "`sector_tag`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-multi-select",
+              "frame": {
+                "title": "Sector",
+                "showTitle": true
+              },
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "Sector",
+                    "queryName": "sector_domain_metrics"
+                  },
+                  {
+                    "fieldName": "sector_tag",
+                    "queryName": "sector_domain_sql"
+                  },
+                  {
+                    "fieldName": "sector_tag",
+                    "queryName": "sector_domain_points"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 2,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}

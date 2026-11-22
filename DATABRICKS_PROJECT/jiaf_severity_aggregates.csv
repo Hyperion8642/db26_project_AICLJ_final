@@ -1,0 +1,158 @@
+Year,Country,Need,Areas assessed,Pop-weighted severity,Unweighted mean,% areas at severity 3+,Population in areas at severity 3+
+2025,afghanistan,Education,401,3.81,3.68,100.0,46024351
+2025,afghanistan,Protection (aggregate),401,3.72,3.59,100.0,46024351
+2025,afghanistan,Shelter / NFI,401,3.27,3.29,100.0,46024351
+2025,afghanistan,Gender-based violence,401,3.27,3.31,100.0,46024351
+2025,afghanistan,Health,401,3.08,3.21,81.5,36007597
+2025,afghanistan,WASH,401,3.08,3.17,88.8,38461247
+2025,afghanistan,General protection,401,3.03,2.74,63.6,34196320
+2025,afghanistan,Nutrition,401,2.97,2.99,85.3,39049228
+2025,afghanistan,Child protection,401,2.96,2.7,57.6,32046643
+2025,afghanistan,"Housing, land & property",401,2.7,2.22,41.4,26071771
+2025,afghanistan,Food security,401,2.68,2.74,62.8,27985765
+2025,afghanistan,Mine action,401,2.04,1.57,18.7,15269717
+2025,drc,Health,332,3.45,3.4,93.1,66112762
+2025,drc,Nutrition,332,3.1,3.07,83.1,59876581
+2025,drc,General protection,332,3.02,3.01,64.2,44612696
+2025,drc,"Housing, land & property",332,2.69,2.65,48.2,35053436
+2025,drc,Child protection,332,2.67,2.61,50.0,36630795
+2025,drc,Food security,330,2.64,2.64,61.8,43551648
+2025,drc,Gender-based violence,332,2.48,2.5,61.1,41808232
+2025,drc,CCCM (Camp Coordination & Management),131,2.44,2.31,43.5,14346685
+2025,drc,Shelter / NFI,332,2.3,2.23,43.1,31991473
+2025,drc,WASH,332,2.3,2.22,42.2,32618725
+2025,drc,Education (PE),332,2.09,1.98,34.3,27548505
+2025,drc,Mine action,332,1.8,1.7,22.0,17948044
+2025,drc,Education,332,1.57,1.48,47.9,35401132
+2025,haiti,Health,140,3.77,3.73,100.0,11899555
+2025,haiti,Protection (aggregate),140,3.73,3.39,100.0,11899555
+2025,haiti,Gender-based violence,140,3.34,3.14,96.4,11600053
+2025,haiti,Food security,140,3.33,3.31,100.0,11899555
+2025,haiti,General protection,140,3.32,3.11,99.3,11844838
+2025,haiti,Shelter / NFI,140,3.24,3.06,87.1,10907011
+2025,haiti,Education,140,3.23,3.1,97.1,11705676
+2025,haiti,Child protection,140,3.17,2.53,45.7,8268273
+2025,haiti,CCCM,140,2.72,2.06,37.1,6987434
+2025,haiti,Nutrition,140,2.36,2.23,31.4,4513340
+2025,haiti,WASH,140,2.32,2.02,22.9,4424855
+2025,haiti,Migrants,140,1.77,1.34,13.6,3867915
+2025,somalia,"Housing, land & property",90,3.69,3.66,81.1,15540766
+2025,somalia,Gender-based violence,90,3.66,3.47,92.2,18513749
+2025,somalia,Child protection,90,3.52,3.32,83.3,17378963
+2025,somalia,Mine action,90,3.45,3.34,80.0,16856694
+2025,somalia,WASH,90,3.41,3.23,88.9,18400065
+2025,somalia,Nutrition,90,3.36,3.27,91.1,18006909
+2025,somalia,Protection (aggregate),90,3.35,3.23,73.3,15218458
+2025,somalia,Health,90,3.32,3.13,78.9,16934216
+2025,somalia,Education,90,3.21,3.2,100.0,19280850
+2025,somalia,Shelter / NFI,90,3.1,2.81,78.9,17217998
+2025,somalia,CCCM,90,2.65,2.43,72.2,15907214
+2025,somalia,Food security,90,2.62,2.57,56.7,11920103
+2025,sudan,Child protection,188,4.03,3.9,99.5,47627638
+2025,sudan,Gender-based violence,188,3.88,3.81,97.3,47064638
+2025,sudan,Protection (aggregate),188,3.84,3.7,100.0,47648546
+2025,sudan,WASH,188,3.82,3.96,100.0,47648546
+2025,sudan,Nutrition,188,3.69,3.74,98.4,46181155
+2025,sudan,General protection,188,3.66,3.46,96.8,46858131
+2025,sudan,Health,188,3.62,3.65,98.9,47280115
+2025,sudan,Education,188,3.61,3.55,93.6,45664795
+2025,sudan,Food security & livelihoods,188,3.51,3.51,100.0,47648546
+2025,sudan,Shelter / NFI,188,3.25,3.14,97.9,47051950
+2025,sudan,Mine action,188,3.01,2.66,44.7,29927269
+2025,sudan,CCCM (Site Management),188,2.86,2.59,58.0,32956596
+2025,syria,Protection (aggregate),270,,3.73,98.5,
+2025,syria,CCCM,50,,3.7,100.0,
+2025,syria,Education,270,,3.62,99.6,
+2025,syria,Health,260,,3.6,100.0,
+2025,syria,Child protection,267,,3.58,96.3,
+2025,syria,WASH,269,,3.53,92.2,
+2025,syria,Gender-based violence,270,,3.41,85.6,
+2025,syria,Nutrition,270,,3.36,97.4,
+2025,syria,Mine action,257,,3.33,85.2,
+2025,syria,Food security,270,,3.3,95.9,
+2025,syria,Early recovery & livelihoods,270,,3.13,92.2,
+2025,syria,Shelter,270,,2.84,68.9,
+2025,syria,Non-food items (NFI),270,,2.62,61.5,
+2025,yemen,Health,333,3.83,3.73,99.1,34760489
+2025,yemen,Nutrition,333,3.62,3.7,100.0,34879018
+2025,yemen,Protection (aggregate),333,3.36,3.03,84.4,32633866
+2025,yemen,Food security & agriculture,333,3.3,3.3,98.8,34788789
+2025,yemen,WASH,333,3.23,3.28,89.2,29783404
+2025,yemen,Education,333,3.17,3.16,96.1,33022907
+2025,yemen,Shelter,333,2.95,2.45,58.0,26492949
+2025,yemen,Gender-based violence,333,2.86,2.38,47.1,25496181
+2025,yemen,CCCM,333,2.58,2.22,58.9,23412766
+2025,yemen,Child protection,333,2.5,2.32,38.7,18332949
+2025,yemen,Rapid response (RRM),333,2.06,1.68,25.2,13546915
+2025,yemen,RMMS,333,0.96,0.59,3.9,3681302
+2025,yemen,Mine action,333,0.69,0.54,8.4,4104491
+2026,afghanistan,Protection (aggregate),401,3.65,3.62,97.3,46704103
+2026,afghanistan,Education,401,3.45,3.45,94.3,46615419
+2026,afghanistan,Nutrition,401,3.09,3.09,85.3,43142802
+2026,afghanistan,Shelter / NFI,401,3.06,3.07,97.8,48009136
+2026,afghanistan,Health,401,3.0,3.28,88.3,35166842
+2026,afghanistan,WASH,401,2.88,2.96,78.8,34788919
+2026,afghanistan,Food security,401,2.72,2.99,79.1,29472771
+2026,drc,Shelter / NFI,90,3.67,3.68,100.0,22455625
+2026,drc,Health,519,3.21,3.17,95.8,114065157
+2026,drc,Gender-based violence,208,3.04,3.12,70.2,32867351
+2026,drc,Child protection,219,2.98,3.05,69.9,34091125
+2026,drc,"Housing, land & property",208,2.89,2.92,55.8,26623419
+2026,drc,Nutrition,519,2.77,2.83,75.5,83775408
+2026,drc,Mine action,208,2.0,2.02,33.7,16588783
+2026,drc,Food security,519,1.88,1.86,33.7,39453529
+2026,drc,General protection,519,1.37,1.33,29.9,34862906
+2026,drc,CCCM (Camp Coordination & Management),519,1.3,1.29,12.1,15546290
+2026,drc,WASH,519,1.23,1.22,27.4,31756014
+2026,drc,Education,519,1.06,0.96,28.7,37821853
+2026,drc,Education (PE),519,0.91,0.9,23.1,27770264
+2026,haiti,Food security,141,3.34,3.26,100.0,11899555
+2026,haiti,Shelter / NFI,140,3.11,2.74,74.3,10198821
+2026,haiti,Education,140,3.09,2.87,85.0,10675290
+2026,haiti,Health,140,2.99,2.59,48.6,8178495
+2026,haiti,CCCM,139,2.94,2.46,63.3,8586057
+2026,haiti,Protection (aggregate),140,2.94,2.38,19.3,5238782
+2026,haiti,WASH,140,2.69,2.6,56.4,7229926
+2026,haiti,Nutrition,140,2.62,2.56,55.7,7249297
+2026,somalia,Health,64,3.62,3.58,96.9,15495249
+2026,somalia,Nutrition,64,3.49,3.42,90.6,14790213
+2026,somalia,Protection (aggregate),64,3.49,3.45,98.4,15414540
+2026,somalia,WASH,64,3.25,3.2,100.0,15609947
+2026,somalia,Education,64,3.09,3.12,96.9,15345149
+2026,somalia,Food security,64,2.66,2.61,60.9,10353477
+2026,somalia,CCCM,64,2.59,2.19,70.3,13251121
+2026,somalia,Shelter / NFI,64,1.93,1.73,50.0,8466425
+2026,sudan,Education,188,3.61,3.56,94.1,45953201
+2026,sudan,Nutrition,188,3.59,3.65,100.0,47704781
+2026,sudan,Protection (aggregate),188,3.45,3.49,97.3,46630048
+2026,sudan,Health,188,3.38,3.33,85.1,39696602
+2026,sudan,WASH,188,3.37,3.5,90.4,42139810
+2026,sudan,Food security & livelihoods,188,3.11,3.15,100.0,47704781
+2026,sudan,Shelter / NFI,188,3.05,3.15,89.9,40843011
+2026,sudan,CCCM (Site Management),188,2.05,2.16,36.7,15207662
+2026,sudan,Gender-based violence,188,0.0,0.0,0.0,0
+2026,sudan,Mine action,188,0.0,0.0,0.0,0
+2026,sudan,General protection,188,0.0,0.0,0.0,0
+2026,syria,CCCM,67,,3.81,100.0,
+2026,syria,Education,270,,3.37,93.3,
+2026,syria,WASH,270,,3.37,93.0,
+2026,syria,Food security,270,,3.34,93.3,
+2026,syria,Multi-purpose cash,270,,3.29,97.0,
+2026,syria,Nutrition,270,,3.22,93.0,
+2026,syria,Protection (aggregate),270,,3.12,91.5,
+2026,syria,Health,270,,3.02,78.9,
+2026,syria,Non-food items (NFI),270,,2.53,60.4,
+2026,syria,Shelter,270,,2.46,34.4,
+2026,yemen,Health,333,,3.6,99.4,
+2026,yemen,Food security & agriculture,333,,3.5,100.0,
+2026,yemen,Nutrition,333,,3.41,99.1,
+2026,yemen,WASH,333,,3.26,89.8,
+2026,yemen,Education,333,,3.01,96.1,
+2026,yemen,Protection (aggregate),333,,3.0,74.2,
+2026,yemen,Gender-based violence,333,,2.5,54.7,
+2026,yemen,Child protection,333,,2.48,44.4,
+2026,yemen,Shelter,333,,2.39,53.5,
+2026,yemen,Rapid response (RRM),333,,2.25,41.1,
+2026,yemen,RMMS,333,,2.01,22.8,
+2026,yemen,CCCM,333,,1.98,60.4,
+2026,yemen,Mine action,94,,1.94,29.8,
